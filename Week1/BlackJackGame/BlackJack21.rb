@@ -52,10 +52,10 @@ end
 
 def main 
        
-  puts "\n    Wait a second while the dealer shuffles the deck!"
+  puts "\nWait a second while the dealer shuffles the deck!"
   
-  # create a random deck of 52 cards
-  @deck = (1..52).to_a.shuffle 
+  # create a random deck of n 52 cards
+  @deck = (1..((rand(5)+1)*52)).to_a.shuffle 
       
   # print the deck of cards (numbers only)
   # puts deck.inspect
@@ -93,21 +93,29 @@ def main
     end # end inner loop
     
     if (@round_over)
-      puts "\nNew Game"
-      @round_over = false
-      @deck.clear
-      @playerHand.clear
-      @dealersHand.clear
+      puts "\nWould you like to play again y/n?"
+      answer = gets.chomp.downcase.strip
       
-      # create a random deck of 52 cards
-      @deck = (1..52).to_a.shuffle
-      #players initial hand  
-      @playerHand = [@deck.pop,@deck.pop]
-      # dealers initial hand
-      @dealersHand = [@deck.pop,@deck.pop]
-      
-      puts "\n#{@UserName} you have the " + printCard(@playerHand[0]) + " and the " + printCard(@playerHand[1]) + " for a score of " + scoreHand(@playerHand).to_s
-
+      if answer == 'n' 
+        @game_over = true 
+        @round_over = true
+      end
+      if answer == 'y'
+        puts "\nNew Game"
+        @round_over = false
+        @game_over = false
+        @deck.clear
+        @playerHand.clear
+        @dealersHand.clear
+        
+        @deck = (1..((rand(5)+1)*52)).to_a.shuffle 
+        #players initial hand  
+        @playerHand = [@deck.pop,@deck.pop]
+        # dealers initial hand
+        @dealersHand = [@deck.pop,@deck.pop]
+        
+        puts "\n#{@UserName} you have the " + printCard(@playerHand[0]) + " and the " + printCard(@playerHand[1]) + " for a score of " + scoreHand(@playerHand).to_s
+      end
     end
     
   end # end outer loop
